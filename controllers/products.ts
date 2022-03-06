@@ -53,7 +53,7 @@ export const getProducts = async(req: Request, res = response) => {
         let page: number = 1;
         let totalPages: number;
         const dollar: Dollar = await axios.get(`${process.env.URL_API}dollar`);
-        console.log(dollar)
+        
         do {
             const resp: RespAPI = await axios.get(`${process.env.URL_API}products?page=${page}`);
             products.push(...resp.data.products);
