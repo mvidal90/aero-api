@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "\"Esta es una Api exclusiva para la app Exshop\"",
   "main": "index.ts",
-  "type": "module",
   "scripts": {
     "dev": "export NODE_ENV=development && nodemon index.ts",
     "test": "export NODE_ENV=test && nodemon index.ts",
