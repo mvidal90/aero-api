@@ -7,7 +7,7 @@
     "dev": "export NODE_ENV=development && nodemon index.ts",
     "test": "export NODE_ENV=test && nodemon index.ts",
     "prod": "export NODE_ENV=production && nodemon index.ts",
-    "start": "ts-node index.ts"
+    "start": "tsc './dist' && node './dist/index.js'"
   },
   "author": "",
   "license": "ISC",
