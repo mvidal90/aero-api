@@ -1,4 +1,4 @@
-import express from "express";
+import * as express from "express";
 import { getCategories } from "../controllers/categories";
 
 const { Router } = require('express');
