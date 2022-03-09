@@ -7,7 +7,7 @@
     "dev": "export NODE_ENV=development && nodemon index.ts",
     "test": "export NODE_ENV=test && nodemon index.ts",
     "prod": "export NODE_ENV=production && nodemon index.ts",
-    "start": "npm run prod"
+    "start": "npm install typescript -g && npm run prod"
   },
   "author": "",
   "license": "ISC",
