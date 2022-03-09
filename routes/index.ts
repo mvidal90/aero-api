@@ -1,5 +1,5 @@
-import glob from 'glob';
-import path from 'path';
+import * as glob from 'glob';
+import * as path from 'path';
 
 export default async (app: Express.Application) => {
   const filePaths = glob.sync(path.resolve(process.cwd(), 'routes/**/*.routes.ts'))
