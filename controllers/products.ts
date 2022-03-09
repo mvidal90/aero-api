@@ -1,5 +1,6 @@
 import axios from "axios";
 import moment from "moment";
+import { imgConvert } from "../helpers/imgConvert";
 
 const { response } = require('express');
 
@@ -9,7 +10,7 @@ interface Products {
     price: number,
     presentation: string,
     brand: string,
-    photo: string,
+    photo: any,
     originalPrice: number,
     updatedAt: Date,
     priceUSD: number
@@ -44,7 +45,7 @@ interface Request {
     params: Params
 }
 
-export const getProducts = async(req: Request, res = response) => {
+export const getProducts = async (req: Request, res = response) => {
 
     const pageReq: number = parseInt(req.params.page, 10);
 
@@ -53,20 +54,20 @@ export const getProducts = async(req: Request, res = response) => {
         let page: number = 1;
         let totalPages: number;
         const dollar: Dollar = await axios.get(`${process.env.URL_API}dollar`);
-        
+
         do {
             const resp: RespAPI = await axios.get(`${process.env.URL_API}products?page=${page}`);
             products.push(...resp.data.products);
             totalPages = resp.data.page_count;
             page++;
         } while (page <= totalPages);
-        
+
         const newProductList: Products[] = products.filter(
             item => new Date(moment(item.updatedAt).format("MM/DD/YYYY")) > new Date(moment().subtract(1, "month").format("MM/DD/YYYY"))
         );
-        
+
         const page_count: number = Math.ceil(newProductList.length / 20);
-        
+
         if (pageReq > page_count) {
             return res.status(401).json({
                 ok: false,
@@ -74,13 +75,15 @@ export const getProducts = async(req: Request, res = response) => {
             })
         }
 
-        const productNewModel: Products[] = 
+        const productNewModel: Products[] = await Promise.all(
             newProductList
-                .slice((pageReq - 1) * 20,  pageReq * 20)
-                .map( prod => ({
+                .slice((pageReq - 1) * 20, pageReq * 20)
+                .map(async (prod) => ({
                     ...prod,
-                    priceUSD: parseFloat((prod.price/dollar.data.rate).toFixed(2))
-                }));
+                    priceUSD: parseFloat((prod.price / dollar.data.rate).toFixed(2)),
+                    photo: await imgConvert(prod.photo)
+                }))
+        );
 
         res.json({
             ok: true,
@@ -88,12 +91,12 @@ export const getProducts = async(req: Request, res = response) => {
             page: pageReq,
             page_count,
             per_page: productNewModel.length,
-        });    
+        });
     } catch (error) {
         res.status(500).json({
             ok: false,
             msg: 'Algo fue mal, vuelve a intentarlo'
-        });   
+        });
     }
 
 };
