@@ -1,11 +1,11 @@
 
 
-import { Application } from "express";
+import express from "express";
 import { getProducts } from "../controllers/products";
 
 const { Router } = require('express');
 
-module.exports = (app: Application) => {
+module.exports = (app: express.Application) => {
     const router = Router();
     
     router.get(
