@@ -11,7 +11,7 @@
     "test": "export NODE_ENV=test && nodemon index.ts",
     "prod": "export NODE_ENV=production && nodemon index.ts",
     "start": "npm run prod",
-    "postinstall": "tsc && rm -rf dist/public && mv -i -v public dist/ ",
+    "postinstall": "tsc && rm -rf dist/public && cp -i -v public/index.html dist/ ",
     "watch-node": "nodemon dist/index.js",
     "build": "tsc",
     "deploy": "git add . && git commit -m 'Deploy proyect' && git push"
