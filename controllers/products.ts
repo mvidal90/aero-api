@@ -45,18 +45,20 @@ interface Request {
     params: Params
 }
 
+const URL_API = "https://challenge-api.aerolab.co/";
+
 export const getProducts = async (req: Request, res = response) => {
 
     const pageReq: number = parseInt(req.params.page, 10);
-
+    
     try {
         const products: Products[] = [];
         let page: number = 1;
         let totalPages: number;
-        const dollar: Dollar = await axios.get(`${process.env.URL_API}dollar`);
-
+        const dollar: Dollar = await axios.get(`${URL_API}dollar`);
+        
         do {
-            const resp: RespAPI = await axios.get(`${process.env.URL_API}products?page=${page}`);
+            const resp: RespAPI = await axios.get(`${URL_API}products?page=${page}`);
             products.push(...resp.data.products);
             totalPages = resp.data.page_count;
             page++;
@@ -74,7 +76,7 @@ export const getProducts = async (req: Request, res = response) => {
                 msg: "La página solicitada no existe."
             })
         }
-
+        
         const productNewModel: Products[] = await Promise.all(
             newProductList
                 .slice((pageReq - 1) * 20, pageReq * 20)

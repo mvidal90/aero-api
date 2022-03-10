@@ -8,7 +8,6 @@ const cors = require('cors')
 
 interface Request {}
 
-// const setup = async () => {
 //Crear el servidor de Express
 const app = express();
 
@@ -38,6 +37,3 @@ app.get('*', (req: Request , res: typeof response) => {
 app.listen( process.env.PORT, () => {
     console.log('Servidor corriendo en el puerto ', process.env.PORT)
 } )
-// };
-
-// setup();

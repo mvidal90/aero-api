@@ -20,10 +20,12 @@ interface Resp {
 interface Request {
 }
 
+const URL_API = "https://challenge-api.aerolab.co/";
+
 export const getCategories = async(req: Request, res = response) => {
 
     try {
-        const resp: Resp = await axios.get(`${process.env.URL_API}categories`);
+        const resp: Resp = await axios.get(`${URL_API}categories`);
         
         const categoriesNewModel: Category[] = resp.data.categories.map( 
             cat => ({

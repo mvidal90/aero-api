@@ -7,4 +7,4 @@ const getCategoryiesRoute = () => {
     return router
 }
     
-module.exports = getCategoryiesRoute;
+module.exports = getCategoryiesRoute();
